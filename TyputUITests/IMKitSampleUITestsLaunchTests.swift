@@ -1,13 +1,13 @@
 //
-//  IMKitSampleUITestsLaunchTests.swift
-//  IMKitSampleUITests
+//  TyputUITestsLaunchTests.swift
+//  TyputUITests
 //
 //  Created by β α on 2021/09/07.
 //
 
 import XCTest
 
-class IMKitSampleUITestsLaunchTests: XCTestCase {
+class TyputUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

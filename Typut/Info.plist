@@ -7,7 +7,7 @@
 	<key>InputMethodConnectionName</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)_Connection</string>
 	<key>InputMethodServerControllerClass</key>
-	<string>$(PRODUCT_MODULE_NAME).IMKitSampleInputController</string>
+	<string>$(PRODUCT_MODULE_NAME).TyputInputController</string>
 	<key>LSBackgroundOnly</key>
 	<true/>
 	<key>tsInputMethodCharacterRepertoireKey</key>

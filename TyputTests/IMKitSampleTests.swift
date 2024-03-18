@@ -1,14 +1,14 @@
 //
-//  IMKitSampleTests.swift
-//  IMKitSampleTests
+//  TyputTests.swift
+//  TyputTests
 //
 //  Created by β α on 2021/09/07.
 //
 
 import XCTest
-@testable import IMKitSample
+@testable import Typut
 
-class IMKitSampleTests: XCTestCase {
+class TyputTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
