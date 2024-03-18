@@ -14,6 +14,7 @@ enum UserAction {
     case enter
     case tab
     case space
+    case escape
     case unknown
     case navigation(NavigationDirection)
 
@@ -32,7 +33,6 @@ enum ClientAction {
     case insertText(String)
     case removeLastMarkedText
     case forwardToCandidateWindow(NSEvent)
-    case delete
 }
 
 enum InputState {
@@ -51,15 +51,7 @@ enum InputState {
             case .input(let string):
                 self = .composing
                 return .appendToMarkedText(string)
-            case .delete:
-                return .delete
-            case .enter:
-                return .insertText("\n")
-            case .tab:
-                return .insertText("\t")
-            case .space:
-                return .insertText(" ")
-            case .unknown, .navigation:
+            case .enter, .tab, .space, .unknown, .navigation, .escape, .delete:
                 return .ignore
             }
         case .composing:
@@ -76,7 +68,7 @@ enum InputState {
             case .tab:
                 self = .selecting
                 return .showCandidateWindow
-            case .unknown, .navigation:
+            case .unknown, .navigation, .escape:
                 return .ignore
             }
         case .selecting:
@@ -87,6 +79,8 @@ enum InputState {
             case .space:
                 self = .composing
                 return .appendToMarkedText(" ")
+            case .tab:
+                return .showCandidateWindow
             case .enter:
                 self = .none
                 return .submitSelectedCandidate
@@ -95,8 +89,8 @@ enum InputState {
                 return .removeLastMarkedText
             case .navigation:
                 return .forwardToCandidateWindow(event)
-            default:
-                return .forwardToCandidateWindow(event)
+            case .unknown, .escape:
+                return .ignore
             }
         }
     }
@@ -128,6 +122,8 @@ class TyputInputController: IMKInputController {
             self.inputState.event(event, userAction: .space)
         case 51: // Delete
             self.inputState.event(event, userAction: .delete)
+        case 53: // Escape
+            self.inputState.event(event, userAction: .escape)
         case 123: // Left
             self.inputState.event(event, userAction: .navigation(.left))
         case 124: // Right
@@ -188,8 +184,6 @@ class TyputInputController: IMKInputController {
             if self.composingText.isEmpty {
                 self.inputState = .none
             }
-        case .delete:
-            return false
         case .ignore:
             return false
         case .forwardToCandidateWindow(let event):
